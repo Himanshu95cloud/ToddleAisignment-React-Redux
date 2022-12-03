@@ -1,0 +1,20 @@
+.Wall {
+  .NavBar {
+    display: flex;
+    padding: 10px;
+    justify-content: space-between;
+    height: 40px;
+    border-bottom: 1px solid rgba(5, 5, 5, 0.06);
+  }
+  .ButtonandSearch {
+    display: flex;
+    column-gap: 20px;
+  }
+  .ToddleText {
+    font-size: 18px;
+    margin-top: 5px;
+    margin-left: 40px;
+    font-weight: 600;
+    color: rgba(7, 6, 6, 0.539);
+  }
+}

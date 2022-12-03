@@ -1,0 +1,26 @@
+.Board {
+  .BoardBox {
+  }
+  .BoardBox {
+    height: 70px;
+    width: 350px;
+    border-radius: 8px;
+    border: 1px solid rgba(5, 5, 5, 0.06);
+    display: grid;
+    grid-template-columns: 1fr 3fr 1fr;
+    column-gap: 10px;
+  }
+  .BoardColor {
+    background-color: rgb(27, 231, 231) !important;
+    width: 70px !important;
+    height: 70px;
+  }
+  .BoardText {
+    text-align: center;
+    margin: auto;
+    font-size: 14px;
+  }
+  .ThreeDot {
+    margin: auto;
+  }
+}
