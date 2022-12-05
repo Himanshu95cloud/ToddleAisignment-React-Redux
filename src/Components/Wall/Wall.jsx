@@ -2,8 +2,7 @@ import React from "react";
 import "./Wall.scss";
 import { AutoComplete, Input } from "antd";
 import { CaretRightOutlined } from "@ant-design/icons";
-import CreateButton from "../Common/CreateButton/Button";
-import Board from "../Board/Board";
+import DashBoard from "../Board/DashBoard/DashBoard";
 import CreateBoard from "../Common/Modals/CreateBoard/CreateBoard";
 
 function Wall() {
@@ -26,7 +25,7 @@ function Wall() {
         </div>
       </div>
       <div style={{ paddingLeft: "40px", paddingRight: "40px" }}>
-        <Board />
+        <DashBoard />
       </div>
     </div>
   );

@@ -1,21 +1,21 @@
 .CreateBoardModal {
   .SkyBule {
-    background-color: #3fe2e2 !important;
+    background-color: rgba(63, 226, 226, 0.833) !important;
     border-radius: 16px;
     margin-right: 5px;
   }
   .LightPurple {
-    background-color: #c582c5 !important;
+    background-color: rgb(197, 130, 197) !important;
     border-radius: 16px;
     margin-right: 5px;
   }
   .LightPink {
-    background-color: #ffc0cb !important;
+    background-color: pink !important;
     border-radius: 16px;
     margin-right: 5px;
   }
   .Yellow {
-    background-color: #ffff00 !important;
+    background-color: yellow !important;
     border-radius: 16px;
     margin-right: 5px;
   }
@@ -33,6 +33,19 @@
     color: black;
     font-weight: 700;
     font-size: 18px;
+  }
+  .Addphoto {
+    width: 150px;
+    text-align: center;
+    border-radius: 4px;
+    background-color: rgba(255, 255, 255, 0.521);
+    height: fit-content;
+    margin-top: 10px;
+    cursor: pointer;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  }
+  .seprator {
+    border-bottom: 1px solid rgb(219, 216, 216);
   }
 }
 .CreateNew {

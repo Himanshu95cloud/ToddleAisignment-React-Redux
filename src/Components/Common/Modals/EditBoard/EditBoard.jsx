@@ -1,12 +1,11 @@
 import React, { useState } from "react";
 import { Button, Input, Modal } from "antd";
-import "./CreateBoard.scss";
+import "./EditBoard.scss";
 import { useDispatch } from "react-redux";
-import { createBoard } from "../../../../redux/Actions/actions";
-const CreateBoard = () => {
-  const [open, setOpen] = useState(false);
-  const [title, setTitle] = useState("");
-  const [color, setColor] = useState("");
+import { createBoard, editBoard } from "../../../../redux/Actions/actions";
+const EditBoard = ({ open, setOpen, currentTitle, currentColor, id }) => {
+  const [title, setTitle] = useState(currentTitle);
+  const [color, setColor] = useState(currentColor);
   const [error, setError] = useState(false);
 
   const dispatch = useDispatch();
@@ -26,14 +25,13 @@ const CreateBoard = () => {
   const handleCreateBoard = () => {
     if (title !== "" && color !== "") {
       dispatch(
-        createBoard({
+        editBoard({
+          id: id,
           title: title,
           color: color,
         })
       );
       setOpen(false);
-      setTitle("");
-      setColor("");
     } else {
       setError(true);
     }
@@ -41,10 +39,6 @@ const CreateBoard = () => {
 
   return (
     <>
-      <Button onClick={showModal} className="  CreateNew">
-        + Create new board
-      </Button>
-
       <Modal
         bodyStyle={{ height: 300 }}
         className="CreateBoardModal"
@@ -88,4 +82,4 @@ const CreateBoard = () => {
     </>
   );
 };
-export default CreateBoard;
+export default EditBoard;
