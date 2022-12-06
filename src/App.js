@@ -4,18 +4,28 @@ import { Card } from "antd";
 import YourPost from "./Components/Post/YourPost/YourPost";
 import { Provider } from "react-redux";
 import store from "./store";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Bookmarks from "./Components/Bookmarks/Bookmarks";
 
 function App() {
   console.log(store);
   return (
-    <Provider store={store}>
-      <Card
-        style={{ minHeight: "40vw", paddingLeft: "20px", paddingRight: "20px" }}
-        className="App"
-      >
-        <Wall />
-      </Card>
-    </Provider>
+    <BrowserRouter>
+      <Provider store={store}>
+        <Card
+          style={{
+            minHeight: "40vw",
+          }}
+          className="App"
+        >
+          <Routes>
+            <Route path="/" element={<Wall />}></Route>
+            <Route path="/yourposts" element={<YourPost />}></Route>
+            <Route path="/bookmarks" element={<Bookmarks />}></Route>
+          </Routes>
+        </Card>
+      </Provider>
+    </BrowserRouter>
   );
 }
 

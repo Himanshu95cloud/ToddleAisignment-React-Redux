@@ -1,7 +1,7 @@
 import React from "react";
 import { Dropdown } from "antd";
 import { useDispatch } from "react-redux";
-import { deleteBoard } from "../../../redux/Actions/actions";
+import { deleteBoard, deletePost } from "../../../redux/Actions/actions";
 import "./Threedots.scss";
 import {
   EllipsisOutlined,
@@ -9,10 +9,13 @@ import {
   DeleteOutlined,
 } from "@ant-design/icons";
 
-function ThreeDot({ setOpen, id }) {
+function ThreeDot({ setOpen, id, postId }) {
   const dispatch = useDispatch();
-  const handleDelete = () => {
+  const handleDeleteBoard = () => {
     dispatch(deleteBoard({ id: id }));
+  };
+  const handleDeletePost = () => {
+    dispatch(deletePost({ id: id, postId: postId }));
   };
   const items = [
     {
@@ -26,7 +29,12 @@ function ThreeDot({ setOpen, id }) {
     },
     {
       label: (
-        <span className="Popovertext" onClick={handleDelete}>
+        <span
+          className="Popovertext"
+          onClick={
+            typeof postId === "number" ? handleDeletePost : handleDeleteBoard
+          }
+        >
           {" "}
           <DeleteOutlined /> &nbsp; Delete
         </span>
@@ -37,7 +45,7 @@ function ThreeDot({ setOpen, id }) {
   return (
     <div className="ThreeDot">
       <Dropdown menu={{ items }} trigger={["click"]}>
-        <div onClick={(e) => e.preventDefault()}>
+        <div>
           <EllipsisOutlined
             rotate={90}
             style={{ color: "black", cursor: "pointer" }}

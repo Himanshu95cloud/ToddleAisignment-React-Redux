@@ -1,0 +1,45 @@
+.YourPost {
+  .PostButton {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+  }
+  .HeadingYourPost {
+    font-size: 20px;
+    font-weight: 600;
+    color: black;
+  }
+  .CreatePost {
+    color: white !important;
+    background-color: brown !important;
+    border-radius: 6px;
+    border-color: brown !important;
+  }
+  .Header {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    border-bottom: 1px solid rgba(5, 5, 5, 0.06);
+  }
+  .NavBar {
+    display: flex;
+    justify-content: space-between;
+    column-gap: 10px;
+  }
+  .PostText {
+    font-size: 20px;
+    margin-top: 5px;
+    font-weight: 700;
+  }
+  .Nodata {
+    text-align: center;
+  }
+  .Nothingheretext {
+    font-weight: 700;
+    font-size: 18px;
+    color: black;
+  }
+  .Createyourtext {
+    font-size: 14px;
+  }
+}

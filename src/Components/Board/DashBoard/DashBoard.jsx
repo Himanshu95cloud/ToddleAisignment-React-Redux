@@ -1,13 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 import "./DashBoard.scss";
 import BoardChips from "../YourBoard/BoardChips";
-import { useSelector } from "react-redux";
-function Board() {
-  const { boards } = useSelector((state) => state.boardReducer);
+
+function Board({ boards }) {
   return (
     <div className="Board">
       <h1>My boards</h1>
-      <div>
+      <div className="ChipsBoard">
         {boards.map((board, index) => {
           return (
             <BoardChips title={board.title} color={board.color} id={index} />

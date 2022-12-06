@@ -1,30 +1,70 @@
-import React from "react";
-import { BookOutlined } from "@ant-design/icons";
-import ThreeDot from "../../Common/Popover/ThreeDot";
+import React, { useState } from "react";
+import { BookOutlined, BookFilled } from "@ant-design/icons";
 import "./PublishedPost.scss";
+import { useDispatch, useSelector } from "react-redux";
+import CreatePost from "../../Common/Modals/CreatePost/CreatePost";
+import ThreeDot from "../../Common/PopoverBoard/ThreeDot";
+import { setBookmark } from "../../../redux/Actions/actions";
 
-function PubishedPost() {
+function PubishedPost({ id, posts }) {
+  const [open, setOpen] = useState(false);
+  const dispatch = useDispatch();
+  const handleBookmark = (postId) => {
+    dispatch(
+      setBookmark({
+        id: id,
+        postId: postId,
+      })
+    );
+  };
+
+  console.log("test");
+
   return (
-    <div className="PublishPost">
-      <div className="Post">
-        <strong className="posttitle">Goalapogos islands, Ecuador</strong>
-        <div style={{ display: "flex", marginTop: "10px" }}>
-          <BookOutlined style={{ marginRight: "10px" }} />
-          <ThreeDot />
-        </div>
-      </div>
-      <div>
-        <img src="" />
-      </div>
-      <div>
-        <p>
-          Create a “Toddle Digital Wall” which allows users to create single or
-          multiple boards that will enable users to express their thoughts on
-          common topics easily. Users can share text and pictures. You are
-          required to develop certain functionalities which we have divided into
-          2 modules.
-        </p>
-      </div>
+    <div style={{ display: "flex", flexWrap: "wrap" }}>
+      {posts.map((post, index) => {
+        return (
+          <div key={index} className="PublishPost">
+            <div className="Post">
+              <strong className="posttitle">{post.subject}</strong>
+              <div
+                style={{
+                  display: "flex",
+                  marginTop: "10px",
+                  marginLeft: "15px",
+                }}
+              >
+                <div
+                  onClick={() => handleBookmark(index)}
+                  style={{ marginRight: "10px", marginTop: "3px" }}
+                >
+                  {console.log(post)}
+                  {post.isBookmarked === true ? (
+                    <BookFilled />
+                  ) : (
+                    <BookOutlined />
+                  )}
+                </div>
+                <ThreeDot id={id} postId={index} setOpen={setOpen} />
+              </div>
+            </div>
+            <div>
+              <img src="" />
+            </div>
+            <div className="Textarea">
+              <span>{post.content}</span>
+            </div>
+            <CreatePost
+              id={id}
+              open={open}
+              setOpen={setOpen}
+              postId={index}
+              currentSubject={post.subject}
+              currentContent={post.content}
+            />
+          </div>
+        );
+      })}
     </div>
   );
 }

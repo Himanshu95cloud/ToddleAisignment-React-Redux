@@ -2,11 +2,14 @@ import React, { useState } from "react";
 import { Button, Input, Modal } from "antd";
 import "./CreateBoard.scss";
 import { useDispatch } from "react-redux";
-import { createBoard } from "../../../../redux/Actions/actions";
-const CreateBoard = () => {
-  const [open, setOpen] = useState(false);
-  const [title, setTitle] = useState("");
-  const [color, setColor] = useState("");
+import { createBoard, editBoard } from "../../../../redux/Actions/actions";
+const CreateBoard = ({ open, setOpen, id, currentTitle, currentColor }) => {
+  const [title, setTitle] = useState(
+    typeof id === "number" ? currentTitle : ""
+  );
+  const [color, setColor] = useState(
+    typeof id === "number" ? currentColor : ""
+  );
   const [error, setError] = useState(false);
 
   const dispatch = useDispatch();
@@ -14,26 +17,38 @@ const CreateBoard = () => {
   const showModal = () => {
     setOpen(true);
   };
-  const handleOk = (e) => {
-    console.log(e);
-    setOpen(false);
-  };
   const handleCancel = (e) => {
     console.log(e);
     setOpen(false);
+    if (!(typeof id === "number")) {
+      setTitle("");
+      setColor("");
+    }
+    setError(false);
   };
 
   const handleCreateBoard = () => {
     if (title !== "" && color !== "") {
-      dispatch(
-        createBoard({
-          title: title,
-          color: color,
-        })
-      );
+      if (typeof id === "number") {
+        dispatch(
+          editBoard({
+            id: id,
+            title: title,
+            color: color,
+          })
+        );
+      } else {
+        dispatch(
+          createBoard({
+            title: title,
+            color: color,
+          })
+        );
+        setTitle("");
+        setColor("");
+      }
       setOpen(false);
-      setTitle("");
-      setColor("");
+      setError(false);
     } else {
       setError(true);
     }
@@ -41,10 +56,11 @@ const CreateBoard = () => {
 
   return (
     <>
-      <Button onClick={showModal} className="  CreateNew">
-        + Create new board
-      </Button>
-
+      {!(typeof id === "number") ? (
+        <Button onClick={showModal} className="  CreateNew">
+          + Create new board
+        </Button>
+      ) : null}
       <Modal
         bodyStyle={{ height: 300 }}
         className="CreateBoardModal"
@@ -52,7 +68,6 @@ const CreateBoard = () => {
         footer={null}
         title={<span className="Headingboard">Add a name for your board</span>}
         open={open}
-        onOk={handleOk}
         onCancel={handleCancel}
       >
         <Input
@@ -80,10 +95,21 @@ const CreateBoard = () => {
             onClick={() => setColor("#FFFF00")}
           ></Button>
         </div>
-        {error === true && <p> Please fill all the details </p>}
+        {color !== "" && (
+          <>
+            {" "}
+            <p> Selected Color</p>
+            <Button
+              style={{ backgroundColor: color }}
+              className="SelectColor"
+            ></Button>
+          </>
+        )}
+
         <Button onClick={handleCreateBoard} className="CreateBoard">
-          Create Board
+          {typeof id === "number" ? "Update Board" : "Create Board"}
         </Button>
+        {error === true && <p> Please fill all the details </p>}
       </Modal>
     </>
   );
