@@ -40,18 +40,17 @@ function Bookmarks() {
       <div className="Header">
         <div className="NavBar">
           <Link to="/yourposts" state={{ boardId: boardId }}>
-            <LeftOutlined style={{ marginTop: "10px", cursor: "pointer" }} />
+            <LeftOutlined style={{ marginTop: "15px", cursor: "pointer" }} />
           </Link>
           <CaretRightOutlined
-            style={{ marginTop: "10px", cursor: "pointer" }}
+            style={{ marginTop: "15px", cursor: "pointer" }}
           />
           <strong className="PostText">My bookmarks</strong>
         </div>
-        <div>
+        <div style={{ display: "flex" }}>
           <AutoComplete
             popupClassName="certain-category-search-dropdown"
-            dropdownMatchSelectWidth={500}
-            style={{ width: 250 }}
+            style={{ width: "100%" }}
           >
             <Input.Search
               size="large"
@@ -60,8 +59,7 @@ function Bookmarks() {
             />
           </AutoComplete>
           <BookFilled
-            height="3em"
-            style={{ marginLeft: "20px", cursor: "pointer" }}
+            style={{ marginLeft: "20px", cursor: "pointer", marginTop: "10px" }}
           />
         </div>
       </div>
@@ -75,6 +73,14 @@ function Bookmarks() {
       >
         <div className="PostData">
           <PubishedPost boardId={boardId} posts={filteredPosts} />
+          {filteredPosts?.length === 0 && (
+            <div className="Nodata">
+              <p className="Nothingheretext">Nothing here yet</p>
+              <p className="Createyourtext">
+                Create your first post by click on the '+' button above
+              </p>
+            </div>
+          )}
         </div>
       </div>
     </div>

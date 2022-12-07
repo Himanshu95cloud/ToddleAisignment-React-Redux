@@ -31,8 +31,7 @@ function Wall() {
         <div className="ButtonandSearch">
           <AutoComplete
             popupClassName="certain-category-search-dropdown"
-            dropdownMatchSelectWidth={500}
-            style={{ width: 250 }}
+            style={{ width: "100%" }}
           >
             <Input.Search
               size="large"

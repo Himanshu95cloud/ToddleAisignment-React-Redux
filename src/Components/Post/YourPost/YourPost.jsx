@@ -40,10 +40,10 @@ function YourPost() {
       <div className="Header">
         <div className="NavBar">
           <Link to="/">
-            <LeftOutlined style={{ marginTop: "10px", cursor: "pointer" }} />
+            <LeftOutlined style={{ marginTop: "15px", cursor: "pointer" }} />
           </Link>
           <CaretRightOutlined
-            style={{ marginTop: "10px", cursor: "pointer" }}
+            style={{ marginTop: "15px", cursor: "pointer" }}
           />
           <strong className="PostText">{board.title}</strong>
         </div>
@@ -51,8 +51,7 @@ function YourPost() {
         <div className="NavBar">
           <AutoComplete
             popupClassName="certain-category-search-dropdown"
-            dropdownMatchSelectWidth={500}
-            style={{ width: 250 }}
+            style={{ width: "100%" }}
           >
             <Input.Search
               onChange={handleSearchPost}
