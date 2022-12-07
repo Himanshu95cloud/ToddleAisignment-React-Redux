@@ -4,6 +4,7 @@
   .ChipsBoard {
     display: flex;
     flex-wrap: wrap;
+    justify-content: flex-start;
   }
   .BoardBox {
     height: 70px;

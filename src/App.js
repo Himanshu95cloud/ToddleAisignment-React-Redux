@@ -13,8 +13,10 @@ function App() {
     <BrowserRouter>
       <Provider store={store}>
         <Card
+        bordered={false}
+        bodyStyle={{padding:0}}
           style={{
-            minHeight: "40vw",
+            minHeight: "60vw",
           }}
           className="App"
         >

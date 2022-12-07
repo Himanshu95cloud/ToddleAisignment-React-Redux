@@ -6,37 +6,41 @@ import CreatePost from "../../Common/Modals/CreatePost/CreatePost";
 import ThreeDot from "../../Common/PopoverBoard/ThreeDot";
 import { setBookmark } from "../../../redux/Actions/actions";
 
-function PubishedPost({ id, posts }) {
+function PubishedPost({ boardId, posts }) {
   const [open, setOpen] = useState(false);
+  const [selectedPost, setSelectedPost] = useState(null);
   const dispatch = useDispatch();
   const handleBookmark = (postId) => {
     dispatch(
       setBookmark({
-        id: id,
+        boardId: boardId,
         postId: postId,
       })
     );
   };
 
-  console.log("test");
-
   return (
-    <div style={{ display: "flex", flexWrap: "wrap" }}>
+    <div
+      style={{
+        display: "flex",
+        flexWrap: "wrap",
+        justifyContent: "flex-start",
+      }}
+    >
       {posts.map((post, index) => {
         return (
-          <div key={index} className="PublishPost">
+          <div key={post.postId} className="PublishPost">
             <div className="Post">
               <strong className="posttitle">{post.subject}</strong>
               <div
                 style={{
                   display: "flex",
-                  marginTop: "10px",
                   marginLeft: "15px",
                 }}
               >
                 <div
-                  onClick={() => handleBookmark(index)}
-                  style={{ marginRight: "10px", marginTop: "3px" }}
+                  onClick={() => handleBookmark(post.postId)}
+                  style={{ marginRight: "10px", cursor: "pointer" }}
                 >
                   {console.log(post)}
                   {post.isBookmarked === true ? (
@@ -45,7 +49,12 @@ function PubishedPost({ id, posts }) {
                     <BookOutlined />
                   )}
                 </div>
-                <ThreeDot id={id} postId={index} setOpen={setOpen} />
+                <ThreeDot
+                  boardId={boardId}
+                  postId={post.postId}
+                  setOpen={setOpen}
+                  setSelectedPost={() => setSelectedPost(post)}
+                />
               </div>
             </div>
             <div>
@@ -54,17 +63,19 @@ function PubishedPost({ id, posts }) {
             <div className="Textarea">
               <span>{post.content}</span>
             </div>
-            <CreatePost
-              id={id}
-              open={open}
-              setOpen={setOpen}
-              postId={index}
-              currentSubject={post.subject}
-              currentContent={post.content}
-            />
           </div>
         );
       })}
+      {selectedPost && (
+        <CreatePost
+          boardId={boardId}
+          postId={selectedPost.postId}
+          open={open}
+          setOpen={setOpen}
+          currentSubject={selectedPost.subject}
+          currentContent={selectedPost.content}
+        />
+      )}
     </div>
   );
 }

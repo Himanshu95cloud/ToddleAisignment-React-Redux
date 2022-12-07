@@ -9,18 +9,34 @@ import {
   DeleteOutlined,
 } from "@ant-design/icons";
 
-function ThreeDot({ setOpen, id, postId }) {
+function ThreeDot({
+  setOpen,
+  boardId,
+  postId,
+  setSelectedPost,
+  setSelectedBoard,
+}) {
   const dispatch = useDispatch();
   const handleDeleteBoard = () => {
-    dispatch(deleteBoard({ id: id }));
+    dispatch(deleteBoard({ boardId: boardId }));
   };
   const handleDeletePost = () => {
-    dispatch(deletePost({ id: id, postId: postId }));
+    dispatch(deletePost({ boardId: boardId, postId: postId }));
   };
   const items = [
     {
       label: (
-        <span className="Popovertext" onClick={() => setOpen(true)}>
+        <span
+          className="Popovertext"
+          onClick={() => {
+            if (typeof postId === "string") {
+              setSelectedPost();
+            } else {
+              setSelectedBoard();
+            }
+            setOpen(true);
+          }}
+        >
           {" "}
           <EditOutlined /> &nbsp; Edit
         </span>
@@ -32,7 +48,7 @@ function ThreeDot({ setOpen, id, postId }) {
         <span
           className="Popovertext"
           onClick={
-            typeof postId === "number" ? handleDeletePost : handleDeleteBoard
+            typeof postId === "string" ? handleDeletePost : handleDeleteBoard
           }
         >
           {" "}

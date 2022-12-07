@@ -7,15 +7,18 @@ import {
   EDIT_POST,
   SET_BOOKMARK,
 } from "../Constants/actionTypes";
+import uuid from "react-uuid";
 
 const defaultState = {
   boards: [],
 };
 
 const boardReducer = (state = defaultState, action) => {
+  let tempState = JSON.parse(JSON.stringify(state));
   switch (action.type) {
     case CREATE_BOARD:
       let newBoard = {
+        boardId: uuid(),
         title: action.payload.title,
         posts: [],
         color: action.payload.color,
@@ -25,90 +28,67 @@ const boardReducer = (state = defaultState, action) => {
         boards: [...state.boards, newBoard],
       };
     case EDIT_BOARD:
-      if (state.boards.length < action.payload.id) return state;
-      else {
-        let tempState = JSON.parse(JSON.stringify(state));
-        let board = tempState.boards[action.payload.id];
-        let editedBoard = {
-          posts: board?.posts?.length > 0 ? board.posts : [],
-          title: action.payload.title,
-          color: action.payload.color,
-        };
-        tempState.boards[action.payload.id] = editedBoard;
-        return tempState;
+      let board = tempState.boards.find(
+        (board) => board.boardId === action.payload.boardId
+      );
+      if (board) {
+        board.title = action.payload.title;
+        board.color = action.payload.color;
       }
+      return tempState;
     case DELETE_BOARD:
-      if (state.boards.length < action.payload.id) return state;
-      else {
-        let tempState = JSON.parse(JSON.stringify(state));
-        tempState.boards.splice(action.payload.id, 1);
-        return tempState;
-      }
+      return {
+        ...state,
+        boards: state.boards.filter(
+          (board) => board.boardId !== action.payload.boardId
+        ),
+      };
     case CREATE_POST:
-      if (state.boards.length < action.payload.id) return state;
-      else {
-        let tempState = JSON.parse(JSON.stringify(state));
-        let newPost = {
-          subject: action.payload.subject,
-          content: action.payload.content,
-          isBookmarked: false,
-        };
-        tempState.boards[action.payload.id].posts.push(newPost);
-        return tempState;
+      let newPost = {
+        postId: uuid(),
+        subject: action.payload.subject,
+        content: action.payload.content,
+        isBookmarked: false,
+      };
+      const currentBoard = tempState.boards.find(
+        (board) => board.boardId === action.payload.boardId
+      );
+      if (currentBoard) {
+        currentBoard.posts.push(newPost);
       }
+      return tempState;
     case EDIT_POST:
-      if (
-        state.boards.length < action.payload.id &&
-        state.boards[action.payload.id].posts.length > action.payload.postId
-      )
-        return state;
-      else {
-        let tempState = JSON.parse(JSON.stringify(state));
-        let post =
-          tempState.boards[action.payload.id].posts[action.payload.postId];
-        let editedPost = {
-          subject: action.payload.subject,
-          content: action.payload.content,
-          isBookmarked: post.isBookmarked,
-        };
-        tempState.boards[action.payload.id].posts[action.payload.postId] =
-          editedPost;
-        return tempState;
+      const post = tempState.boards
+        .find((board) => board.boardId === action.payload.boardId)
+        .posts.find((item) => item.postId === action.payload.postId);
+
+      if (post) {
+        post.subject = action.payload.subject;
+        post.content = action.payload.content;
       }
 
+      return tempState;
     case DELETE_POST:
-      if (
-        state.boards.length < action.payload.id &&
-        state.boards[action.payload.id].posts.length > action.payload.postId
-      )
-        return state;
-      else {
-        let tempState = JSON.parse(JSON.stringify(state));
-        tempState.boards[action.payload.id].posts.splice(
-          action.payload.postId,
-          1
+      const postBoard = tempState.boards.find(
+        (item) => item.boardId === action.payload.boardId
+      );
+      if (postBoard) {
+        postBoard.posts = postBoard.posts.filter(
+          (post) => post.postId !== action.payload.postId
         );
-        return tempState;
       }
+
+      return tempState;
     case SET_BOOKMARK:
-      if (
-        state.boards.length < action.payload.id &&
-        state.boards[action.payload.id].posts.length > action.payload.postId
-      )
-        return state;
-      else {
-        let tempState = JSON.parse(JSON.stringify(state));
-        let post =
-          tempState.boards[action.payload.id].posts[action.payload.postId];
-        let editedPost = {
-          subject: post.subject,
-          content: post.content,
-          isBookmarked: !post.isBookmarked,
-        };
-        tempState.boards[action.payload.id].posts[action.payload.postId] =
-          editedPost;
-        return tempState;
+      const postBookmark = tempState.boards
+        .find((board) => board.boardId === action.payload.boardId)
+        .posts.find((item) => item.postId === action.payload.postId);
+
+      if (postBookmark) {
+        postBookmark.isBookmarked = !postBookmark.isBookmarked;
       }
+
+      return tempState;
     default:
       return state;
   }

@@ -7,6 +7,7 @@ import {
   MinusOutlined,
   BookOutlined,
   SearchOutlined,
+  BookFilled,
 } from "@ant-design/icons";
 import PubishedPost from "../Post/PublishedPost/PublishedPost";
 import { useSelector } from "react-redux";
@@ -15,19 +16,21 @@ import { Link } from "react-router-dom";
 
 function Bookmarks() {
   const location = useLocation();
-  const id = location.state.id;
+  const boardId = location.state.boardId;
   const color = location.state.color;
   const { boards } = useSelector((state) => {
     return state.boardReducer;
   });
 
-  const bookmarkedPosts = boards[id].posts.filter((item) => item.isBookmarked);
+  const board = boards.find((item) => item.boardId === boardId);
+
+  const bookmarkedPosts = board.posts.filter((item) => item.isBookmarked);
 
   return (
     <div className="YourPost">
       <div className="Header">
         <div className="NavBar">
-          <Link to="/yourposts" state={{ id: id }}>
+          <Link to="/yourposts" state={{ boardId: boardId }}>
             <LeftOutlined style={{ marginTop: "10px", cursor: "pointer" }} />
           </Link>
           <CaretRightOutlined
@@ -35,10 +38,24 @@ function Bookmarks() {
           />
           <strong className="PostText">My bookmarks</strong>
         </div>
+        <div>
+          <AutoComplete
+            popupClassName="certain-category-search-dropdown"
+            dropdownMatchSelectWidth={500}
+            style={{ width: 250 }}
+          >
+            <Input.Search size="large" placeholder="Search" />
+          </AutoComplete>
+          <BookFilled
+            height="3em"
+            style={{ marginLeft: "20px", cursor: "pointer" }}
+          />
+        </div>
       </div>
+
       <div style={{ backgroundColor: color, borderRadius: "4px" }}>
         <div className="PostData">
-          <PubishedPost id={id} posts={bookmarkedPosts} />
+          <PubishedPost boardId={boardId} posts={bookmarkedPosts} />
         </div>
       </div>
     </div>

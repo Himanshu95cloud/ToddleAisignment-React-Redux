@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Input, Modal, Upload } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 
@@ -7,7 +7,7 @@ import { useDispatch } from "react-redux";
 import { createPost, editPost } from "../../../../redux/Actions/actions";
 const { TextArea } = Input;
 const CreatePost = ({
-  id,
+  boardId,
   open,
   setOpen,
   postId,
@@ -15,20 +15,25 @@ const CreatePost = ({
   currentContent,
 }) => {
   const [subject, setSubject] = useState(
-    typeof postId === "number" ? currentSubject : ""
+    typeof postId === "string" ? currentSubject : ""
   );
   const [content, setContent] = useState(
-    typeof postId === "number" ? currentContent : ""
+    typeof postId === "string" ? currentSubject : ""
   );
   const [error, setError] = useState(false);
 
   const dispatch = useDispatch();
 
+  useEffect(() => {
+    setContent(typeof postId === "string" ? currentContent : "");
+    setSubject(typeof postId === "string" ? currentSubject : "");
+  }, [currentContent, currentSubject, postId]);
+
   const showModal = () => {
     setOpen(true);
   };
   const handleCancel = (e) => {
-    if (!(typeof postId === "number")) {
+    if (!(typeof postId === "string")) {
       setSubject("");
       setContent("");
     }
@@ -38,10 +43,10 @@ const CreatePost = ({
 
   const handleCreatePost = () => {
     if (subject !== "" && content !== "") {
-      if (typeof postId === "number") {
+      if (typeof postId === "string") {
         dispatch(
           editPost({
-            id: id,
+            boardId: boardId,
             postId: postId,
             subject: subject,
             content: content,
@@ -52,7 +57,7 @@ const CreatePost = ({
           createPost({
             subject: subject,
             content: content,
-            id: id,
+            boardId: boardId,
           })
         );
         setSubject("");
@@ -67,7 +72,7 @@ const CreatePost = ({
 
   return (
     <>
-      {typeof postId === "number" ? null : (
+      {typeof postId === "string" ? null : (
         <Button onClick={showModal} className="  CreateNew">
           + Create new post
         </Button>
@@ -78,15 +83,20 @@ const CreatePost = ({
         className="CreateBoardModal"
         width={380}
         footer={null}
-        title={<span className="Headingboard">Create a post</span>}
+        title={
+          <span className="Headingboard">
+            {typeof postId === "string" ? "Change Your Post " : "Create a post"}
+          </span>
+        }
         open={open}
         onCancel={handleCancel}
       >
-        <p> write something for your post </p>
+        <span> write something for your post </span> <br />
         <strong>Subject</strong>
         <Input
-          placeholder="Places around the world"
+          placeholder="Enter subject "
           value={subject}
+          maxLength={30}
           onChange={(e) => {
             setSubject(e.target.value);
           }}
@@ -110,7 +120,7 @@ const CreatePost = ({
           }}
         />
         <Button className="CreateBoard" onClick={handleCreatePost}>
-          {typeof postId === "number" ? "Update Post" : "Create Post"}
+          {typeof postId === "string" ? "Update Post" : "Create Post"}
         </Button>
       </Modal>
     </>

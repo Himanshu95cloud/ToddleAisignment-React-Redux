@@ -7,17 +7,20 @@
     border-radius: 8px;
     border: 1px solid rgba(5, 5, 5, 0.06);
     display: grid;
-    grid-template-columns: 1fr 3fr 1fr;
+    grid-template-columns: 2fr 4fr 1fr;
     column-gap: 10px;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
   }
   .BoardColor {
     width: 70px !important;
     height: 70px;
+    border-radius: 4px;
   }
   .BoardText {
     text-align: center;
     margin: auto;
     font-size: 14px;
+    word-break: break-all;
   }
   .ThreeDot {
     margin: auto;

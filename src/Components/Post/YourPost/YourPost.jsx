@@ -16,10 +16,10 @@ import { Link } from "react-router-dom";
 
 function YourPost() {
   const location = useLocation();
-  const id = location.state.id;
+  const boardId = location.state.boardId;
 
   const { boards } = useSelector((state) => state.boardReducer);
-  const board = boards[id];
+  const board = boards.find((item) => item.boardId === boardId);
   let posts = board.posts;
   const [filteredPosts, setFilteredPosts] = useState(posts);
 
@@ -62,7 +62,10 @@ function YourPost() {
             />
           </AutoComplete>
           <MinusOutlined style={{ marginTop: "10px" }} rotate={90} />
-          <Link to="/bookmarks" state={{ id: id, color: board.color }}>
+          <Link
+            to="/bookmarks"
+            state={{ boardId: boardId, color: board.color }}
+          >
             <BookOutlined style={{ marginTop: "10px", cursor: "pointer" }} />
           </Link>
         </div>
@@ -70,10 +73,10 @@ function YourPost() {
       <div style={{ backgroundColor: board.color, borderRadius: "4px" }}>
         <div className="PostButton">
           <span className="HeadingYourPost">Your posts</span>
-          <CreatePost id={id} open={open} setOpen={setOpen} />
+          <CreatePost boardId={boardId} open={open} setOpen={setOpen} />
         </div>
         <div className="PostData">
-          <PubishedPost id={id} posts={filteredPosts} />
+          <PubishedPost boardId={boardId} posts={filteredPosts} />
         </div>
       </div>
       {/* <div className="Nodata">
