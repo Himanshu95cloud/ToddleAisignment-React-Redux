@@ -1,12 +1,9 @@
-import { Button, AutoComplete, Input } from "antd";
+import { AutoComplete, Input } from "antd";
 import React, { useEffect, useState } from "react";
 import "./Bookmarks.scss";
 import {
   LeftOutlined,
   CaretRightOutlined,
-  MinusOutlined,
-  BookOutlined,
-  SearchOutlined,
   BookFilled,
 } from "@ant-design/icons";
 import PubishedPost from "../Post/PublishedPost/PublishedPost";
@@ -23,8 +20,20 @@ function Bookmarks() {
   });
 
   const board = boards.find((item) => item.boardId === boardId);
-
   const bookmarkedPosts = board.posts.filter((item) => item.isBookmarked);
+  const [filteredPosts, setFilteredPosts] = useState(bookmarkedPosts);
+
+  useEffect(() => {
+    setFilteredPosts(bookmarkedPosts);
+  }, [boards]);
+
+  const handleSearchPost = (e) => {
+    if (bookmarkedPosts.length > 0) {
+      setFilteredPosts(
+        bookmarkedPosts.filter((item) => item.subject.includes(e.target.value))
+      );
+    }
+  };
 
   return (
     <div className="YourPost">
@@ -44,7 +53,11 @@ function Bookmarks() {
             dropdownMatchSelectWidth={500}
             style={{ width: 250 }}
           >
-            <Input.Search size="large" placeholder="Search" />
+            <Input.Search
+              size="large"
+              placeholder="Search"
+              onChange={handleSearchPost}
+            />
           </AutoComplete>
           <BookFilled
             height="3em"
@@ -53,9 +66,15 @@ function Bookmarks() {
         </div>
       </div>
 
-      <div style={{ backgroundColor: color, borderRadius: "4px" }}>
+      <div
+        style={{
+          backgroundColor: color,
+          borderRadius: "4px",
+          minHeight: "60vw",
+        }}
+      >
         <div className="PostData">
-          <PubishedPost boardId={boardId} posts={bookmarkedPosts} />
+          <PubishedPost boardId={boardId} posts={filteredPosts} />
         </div>
       </div>
     </div>

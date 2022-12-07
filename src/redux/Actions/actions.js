@@ -6,6 +6,7 @@ import {
   DELETE_POST,
   EDIT_POST,
   SET_BOOKMARK,
+  SET_POST_LIKE,
 } from "../Constants/actionTypes";
 
 export const createBoard = (payload) => {
@@ -50,6 +51,13 @@ export const editPost = (payload) => {
 export const setBookmark = (payload) => {
   return {
     type: SET_BOOKMARK,
+    payload: payload,
+  };
+};
+
+export const setPostLike = (payload) => {
+  return {
+    type: SET_POST_LIKE,
     payload: payload,
   };
 };

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import "./BoardChips.scss";
 import ThreeDot from "../../Common/PopoverBoard/ThreeDot";
 

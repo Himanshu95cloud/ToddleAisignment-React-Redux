@@ -6,6 +6,10 @@
   border-radius: 8px;
   padding: 10px;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  display: grid;
+  grid-template-rows: 1fr 5fr 0.7fr;
+  row-gap: 10px;
+  // column-gap: 10px;
   .Post {
     display: flex;
     justify-content: space-between;
@@ -18,7 +22,9 @@
     word-break: break-all;
   }
   .Textarea {
-    max-width: 20vw;
+    max-width: 25vw;
+    max-height: 300px;
+    overflow-x: auto;
     word-break: break-all;
   }
 }

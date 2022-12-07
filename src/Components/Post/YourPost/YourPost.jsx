@@ -1,4 +1,4 @@
-import { Button, AutoComplete, Input } from "antd";
+import { AutoComplete, Input } from "antd";
 import React, { useEffect, useState } from "react";
 import "./YourPost.scss";
 import {
@@ -6,7 +6,6 @@ import {
   CaretRightOutlined,
   MinusOutlined,
   BookOutlined,
-  SearchOutlined,
 } from "@ant-design/icons";
 import PubishedPost from "../PublishedPost/PublishedPost";
 import CreatePost from "../../Common/Modals/CreatePost/CreatePost";
@@ -70,21 +69,29 @@ function YourPost() {
           </Link>
         </div>
       </div>
-      <div style={{ backgroundColor: board.color, borderRadius: "4px" }}>
+      <div
+        style={{
+          backgroundColor: board.color,
+          borderRadius: "4px",
+          minHeight: "60vw",
+        }}
+      >
         <div className="PostButton">
           <span className="HeadingYourPost">Your posts</span>
           <CreatePost boardId={boardId} open={open} setOpen={setOpen} />
         </div>
         <div className="PostData">
           <PubishedPost boardId={boardId} posts={filteredPosts} />
+          {filteredPosts?.length === 0 && (
+            <div className="Nodata">
+              <p className="Nothingheretext">Nothing here yet</p>
+              <p className="Createyourtext">
+                Create your first post by click on the '+' button above
+              </p>
+            </div>
+          )}
         </div>
       </div>
-      {/* <div className="Nodata">
-        <p className="Nothingheretext">Nothing here yet</p>
-        <p className="Createyourtext">
-          Create your first post by click on the '+' button above
-        </p>
-      </div> */}
     </div>
   );
 }

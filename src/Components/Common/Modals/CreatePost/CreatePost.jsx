@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Button, Input, Modal, Upload } from "antd";
-import { UploadOutlined } from "@ant-design/icons";
+import { Button, Input, Modal } from "antd";
 
 import "./CreatePost.scss";
 import { useDispatch } from "react-redux";
@@ -105,11 +104,11 @@ const CreatePost = ({
         {/* <div className="Addphoto">
           <p style={{ padding: "0px" }}>Add Your Photo</p>
         </div> */}
-        <Upload>
+        {/* <Upload>
           <Button className="Addphoto" icon={<UploadOutlined />}>
             Add Your Photo
           </Button>
-        </Upload>
+        </Upload> */}
         <div className="seprator" style={{ marginTop: "30px" }} />
         <h3>What's on your Mind ?</h3>
         <TextArea

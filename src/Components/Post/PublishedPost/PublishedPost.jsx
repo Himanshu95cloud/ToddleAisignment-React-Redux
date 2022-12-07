@@ -1,10 +1,15 @@
 import React, { useState } from "react";
-import { BookOutlined, BookFilled } from "@ant-design/icons";
+import {
+  BookOutlined,
+  BookFilled,
+  LikeOutlined,
+  LikeFilled,
+} from "@ant-design/icons";
 import "./PublishedPost.scss";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import CreatePost from "../../Common/Modals/CreatePost/CreatePost";
 import ThreeDot from "../../Common/PopoverBoard/ThreeDot";
-import { setBookmark } from "../../../redux/Actions/actions";
+import { setBookmark, setPostLike } from "../../../redux/Actions/actions";
 
 function PubishedPost({ boardId, posts }) {
   const [open, setOpen] = useState(false);
@@ -57,11 +62,30 @@ function PubishedPost({ boardId, posts }) {
                 />
               </div>
             </div>
-            <div>
+            {/* <div>
               <img src="" />
-            </div>
+            </div> */}
             <div className="Textarea">
               <span>{post.content}</span>
+            </div>
+            <div>
+              {post.isLiked === true ? (
+                <LikeFilled
+                  onClick={() => {
+                    dispatch(
+                      setPostLike({ boardId: boardId, postId: post.postId })
+                    );
+                  }}
+                />
+              ) : (
+                <LikeOutlined
+                  onClick={() => {
+                    dispatch(
+                      setPostLike({ boardId: boardId, postId: post.postId })
+                    );
+                  }}
+                />
+              )}
             </div>
           </div>
         );

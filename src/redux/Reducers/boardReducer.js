@@ -6,6 +6,7 @@ import {
   DELETE_POST,
   EDIT_POST,
   SET_BOOKMARK,
+  SET_POST_LIKE,
 } from "../Constants/actionTypes";
 import uuid from "react-uuid";
 
@@ -49,6 +50,7 @@ const boardReducer = (state = defaultState, action) => {
         subject: action.payload.subject,
         content: action.payload.content,
         isBookmarked: false,
+        isLiked: false,
       };
       const currentBoard = tempState.boards.find(
         (board) => board.boardId === action.payload.boardId
@@ -86,6 +88,16 @@ const boardReducer = (state = defaultState, action) => {
 
       if (postBookmark) {
         postBookmark.isBookmarked = !postBookmark.isBookmarked;
+      }
+
+      return tempState;
+    case SET_POST_LIKE:
+      const postLike = tempState.boards
+        .find((board) => board.boardId === action.payload.boardId)
+        .posts.find((item) => item.postId === action.payload.postId);
+
+      if (postLike) {
+        postLike.isLiked = !postLike.isLiked;
       }
 
       return tempState;
