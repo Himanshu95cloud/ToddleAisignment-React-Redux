@@ -19,8 +19,6 @@ const CreatePost = ({
   const [content, setContent] = useState(
     typeof postId === "string" ? currentSubject : ""
   );
-  const [error, setError] = useState(false);
-
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -37,7 +35,6 @@ const CreatePost = ({
       setContent("");
     }
     setOpen(false);
-    setError(false);
   };
 
   const handleCreatePost = () => {
@@ -63,9 +60,6 @@ const CreatePost = ({
         setContent("");
       }
       setOpen(false);
-      setError(false);
-    } else {
-      setError(true);
     }
   };
 

@@ -26,7 +26,7 @@ function YourPost() {
 
   useEffect(() => {
     setFilteredPosts(posts);
-  }, [boards]);
+  }, [posts]);
 
   const handleSearchPost = (e) => {
     if (posts.length > 0) {

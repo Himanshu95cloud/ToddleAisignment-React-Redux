@@ -25,7 +25,7 @@ function Bookmarks() {
 
   useEffect(() => {
     setFilteredPosts(bookmarkedPosts);
-  }, [boards]);
+  }, [bookmarkedPosts]);
 
   const handleSearchPost = (e) => {
     if (bookmarkedPosts.length > 0) {
